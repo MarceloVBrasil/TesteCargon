@@ -27,6 +27,15 @@ export default function HomePage() {
     const tipoSearchParams = useMemo(() => getArrayFromQueryParams(searchParams.get('tipo')), [searchParams])
     const esporteSearchParams = useMemo(() => getArrayFromQueryParams(searchParams.get('esporte')), [searchParams])
 
+
+    function getFilteredData() {
+        return products.filter(product => precoSearchParams.length == 0 ? product : filterPrice(product.price, precoSearchParams))
+            .filter(product => marcaSearchParams.length == 0 ? product : filterMarca(product.seller, marcaSearchParams))
+            .filter(product => tamanhoSearchParams.length == 0 ? product : filterTamanho(product.available_sizes, tamanhoSearchParams))
+            .filter(product => tipoSearchParams.length == 0 ? product : filterTipo(product.type, tipoSearchParams))
+            .filter(product => esporteSearchParams.length == 0 ? product : filterEsporte(product.sport, esporteSearchParams))
+    }
+
     return (
         <div className="bg-terciary w-full min-h-[100vh]">
             <Header isDrawerOpen={isLinkDrawerOpen} onDrawerClose={toggleLinkDrawer} />
@@ -87,20 +96,17 @@ export default function HomePage() {
 
                 <main className="grid pl-8 pb-8 grid-cols-1 lg:grid-cols-2 gap-y-8 place-items-center xl:place-items-start w-full">
                     {
-                        products.filter(product => precoSearchParams.length == 0 ? product : filterPrice(product.price, precoSearchParams))
-                            .filter(product => marcaSearchParams.length == 0 ? product : filterMarca(product.seller, marcaSearchParams))
-                            .filter(product => tamanhoSearchParams.length == 0 ? product : filterTamanho(product.available_sizes, tamanhoSearchParams))
-                            .filter(product => tipoSearchParams.length == 0 ? product : filterTipo(product.type, tipoSearchParams))
-                            .filter(product => esporteSearchParams.length == 0 ? product : filterEsporte(product.sport, esporteSearchParams))
-                            .map(product => (
-                                <Product
-                                    image={product.image_url}
-                                    name={product.name}
-                                    price={product.price}
-                                    onClick={seeProductDetails}
-                                    key={product.name}
-                                />
-                            ))
+                        getFilteredData().length > 0 ?
+                            getFilteredData()
+                                .map(product => (
+                                    <Product
+                                        image={product.image_url}
+                                        name={product.name}
+                                        price={product.price}
+                                        onClick={seeProductDetails}
+                                        key={product.name}
+                                    />
+                                )) : <p className="mx-auto h-[45rem] col-span-2 text-4xl place-content-center text-center">Nenhum resultado encontrado</p>
                     }
                 </main>
             </div>
