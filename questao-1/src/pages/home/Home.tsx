@@ -2,12 +2,12 @@ import { useMemo, useState } from "react";
 import Header from "../../components/Header/Header";
 
 import products from "../../data/data.json"
-import Filter from "../../assets/svgs/Filter";
+import FilterSVG from "../../assets/svgs/Filter";
 import Product from "../../components/Product/Product";
 import Filters from "./components/Filters/Filters";
 import ProductDetail from "../../components/ProductDetail/ProductDetail";
 import { useSearchParams } from "react-router-dom";
-import { filterEsporte, filterMarca, filterPrice, filterTamanho, filterTipo, formatFilterPriceText, getArrayFromQueryParams, removeElement } from "./components/Filters/helpers/FilterHelper";
+import { filterEsporte, filterMarca, filterPrice, filterTamanho, filterTipo, formatFilterPriceText, getArrayFromQueryParams, handleFilterChange } from "./components/Filters/helpers/FilterHelper";
 import AppliedFilter from "../../components/AppliedFilter/AppliedFilter";
 
 export default function HomePage() {
@@ -42,7 +42,7 @@ export default function HomePage() {
 
             <div className="bg-white h-20 overflow-x-scroll py-8 flex items-center  px-8 gap-4 relative hide-scrollbar">
                 <div className="cursor-pointer block xl:hidden" onClick={toggleFilterDrawer}>
-                    <Filter />
+                    <FilterSVG />
                 </div>
                 {
                     precoSearchParams.length == 0
@@ -54,31 +54,31 @@ export default function HomePage() {
 
                             {
                                 precoSearchParams.map(param => (
-                                    <AppliedFilter key={param} filterValue={param} filterText={formatFilterPriceText(param)} removeFilter={() => removePrecoElement(param)} />
+                                    <AppliedFilter key={param} filterValue={param} filterText={formatFilterPriceText(param)} removeFilter={() => handleFilterChange('preco', param, precoSearchParams, setSearchParams, searchParams)} />
                                 ))
                             }
 
                             {
                                 marcaSearchParams.map(param => (
-                                    <AppliedFilter key={param} filterValue={param} filterText={param} removeFilter={() => removeMarcaElement(param)} />
+                                    <AppliedFilter key={param} filterValue={param} filterText={param} removeFilter={() => handleFilterChange('marca', param, marcaSearchParams, setSearchParams, searchParams)} />
                                 ))
                             }
 
                             {
                                 tamanhoSearchParams.map(param => (
-                                    <AppliedFilter key={param} filterValue={param} filterText={param} removeFilter={() => removeTamanhoElement(param)} />
+                                    <AppliedFilter key={param} filterValue={param} filterText={param} removeFilter={() => handleFilterChange('tamanho', param, tamanhoSearchParams, setSearchParams, searchParams)} />
                                 ))
                             }
 
                             {
                                 tipoSearchParams.map(param => (
-                                    <AppliedFilter key={param} filterValue={param} filterText={param} removeFilter={() => removeTipoElement(param)} />
+                                    <AppliedFilter key={param} filterValue={param} filterText={param} removeFilter={() => handleFilterChange('tipo', param, tipoSearchParams, setSearchParams, searchParams)} />
                                 ))
                             }
 
                             {
                                 esporteSearchParams.map(param => (
-                                    <AppliedFilter key={param} filterValue={param} filterText={param} removeFilter={() => removeEsporteElement(param)} />
+                                    <AppliedFilter key={param} filterValue={param} filterText={param} removeFilter={() => handleFilterChange('esporte', param, esporteSearchParams, setSearchParams, searchParams)} />
                                 ))
                             }
                         </div>
@@ -92,6 +92,12 @@ export default function HomePage() {
                     onDrawerClose={toggleFilterDrawer}
                     searchParams={searchParams}
                     setSearchParams={setSearchParams}
+
+                    precoSearchParams={precoSearchParams}
+                    marcaSearchParams={marcaSearchParams}
+                    tamanhoSearchParams={tamanhoSearchParams}
+                    tipoSearchParams={tipoSearchParams}
+                    esporteSearchParams={esporteSearchParams}
                 />
 
                 <main className="grid pl-8 pb-8 grid-cols-1 lg:grid-cols-2 gap-y-8 place-items-center xl:place-items-start w-full">
@@ -135,50 +141,5 @@ export default function HomePage() {
 
     function closeProductDetails() {
         setSelectedProductName('')
-    }
-
-    function removePrecoElement(element: string) {
-        const elements = removeElement(element, precoSearchParams)
-
-        setSearchParams(prev => {
-            prev.set("preco", elements)
-            return prev
-        })
-    }
-
-    function removeMarcaElement(element: string) {
-        const elements = removeElement(element, marcaSearchParams)
-
-        setSearchParams(prev => {
-            prev.set("marca", elements)
-            return prev
-        })
-    }
-
-    function removeTamanhoElement(element: string) {
-        const elements = removeElement(element, tamanhoSearchParams)
-
-        setSearchParams(prev => {
-            prev.set("tamanho", elements)
-            return prev
-        })
-    }
-
-    function removeTipoElement(element: string) {
-        const elements = removeElement(element, tipoSearchParams)
-
-        setSearchParams(prev => {
-            prev.set("tipo", elements)
-            return prev
-        })
-    }
-
-    function removeEsporteElement(element: string) {
-        const elements = removeElement(element, esporteSearchParams)
-
-        setSearchParams(prev => {
-            prev.set("esporte", elements)
-            return prev
-        })
     }
 }
