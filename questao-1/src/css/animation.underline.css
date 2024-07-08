@@ -1,0 +1,33 @@
+
+
+@keyframes draw-underline {
+    from {
+        height: 1px;
+        width: 0;
+    }
+
+    to {
+        height: 1px;
+        width: calc(100% + 10px)
+    }
+}
+
+@keyframes remove-underline {
+    from {
+        height: 1px;
+        width: 100%;
+    }
+
+    to {
+        height: 1px;
+        width: 0;
+    }
+}
+
+a:hover .link-border {
+    animation: draw-underline 500ms forwards;
+}
+
+a .link-border {
+    animation: remove-underline 500ms;
+}

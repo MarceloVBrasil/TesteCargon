@@ -1,0 +1,42 @@
+@import "./css/animation.underline.css";
+@import "./css/animations.paint.css";
+
+@import "./css/fonts.opensans.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.parent {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 750ms;
+}
+
+.parent>.child {
+    overflow: hidden;
+}
+
+.grandpa:hover > .parent {
+    grid-template-rows: 1fr;
+}
+
+.plus-icon {
+    transition: transform 750ms;
+}
+
+.grandpa:hover > .plus-icon {
+    transform: rotate(45deg)
+}
+
+.customModal {
+    /* width: 90%; */
+    overflow-y: hidden;
+}

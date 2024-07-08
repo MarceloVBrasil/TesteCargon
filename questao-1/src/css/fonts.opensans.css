@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'open-sans-light';
+    src: url('../assets/fonts/OpenSans-Light.ttf');
+}
+
+@font-face {
+    font-family: 'open-sans-medium';
+    src: url('../assets/fonts/OpenSans-Medium.ttf');
+}
+
+@font-face {
+    font-family: 'open-sans-regular';
+    src: url('../assets/fonts/OpenSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'open-sans-semi-bold';
+    src: url('../assets/fonts/OpenSans-SemiBold.ttf');
+}

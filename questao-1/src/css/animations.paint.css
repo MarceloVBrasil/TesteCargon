@@ -1,0 +1,27 @@
+@keyframes paint {
+    from {
+        color: black;
+    }
+
+    to {
+        color: #FBAC27;
+    }
+}
+
+@keyframes remove-paint {
+    from {
+        color: #FBAC27;
+    }
+
+    to {
+        color: black;
+    }
+}
+
+a:hover .link-text {
+    animation: paint 500ms forwards;
+}
+
+a .link-text {
+    animation: remove-paint 1s linear;
+}
